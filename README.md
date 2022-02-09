@@ -119,8 +119,8 @@ Planeta não encontrado
 
 # Links de apoio
 
-https://httpstatuses.com/
-https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
-https://swapi.dev/api/planets/?search=Tatooine
-http://localhost:9200/ - Local Elastic Search
-https://swapi.dev/documentation
+- https://httpstatuses.com/
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+- https://swapi.dev/api/planets/?search=Tatooine
+- http://localhost:9200/ - Local Elastic Search
+- https://swapi.dev/documentation
