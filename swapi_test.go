@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"net/http"
 	"strconv"
 	"testing"
 )
@@ -94,5 +95,158 @@ func TestCreateDeleteUnit(t *testing.T) {
 	_, err = searchPlanetByName(createdPlanet.Name)
 	if err != nil && err.Error() != "No planet found" {
 		t.Error("Expected to not to find")
+	}
+}
+
+func TestGeneralErrorService(t *testing.T) {
+
+	url := fmt.Sprintf("http://%s/api/planetz", ApiEndpoint)
+
+	response, err := http.Get(url)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if response.StatusCode != http.StatusNotFound {
+		t.Error("Expected 404 not found")
+	}
+}
+
+func TestOptionsMethodErrorService(t *testing.T) {
+
+	url := fmt.Sprintf("http://%s/api/planets", ApiEndpoint)
+
+	req, err := http.NewRequest("OPTIONS", url, nil)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if response.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Expected %d method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func TestPutMethodErrorService(t *testing.T) {
+
+	url := fmt.Sprintf("http://%s/api/planets", ApiEndpoint)
+
+	req, err := http.NewRequest("PUT", url, nil)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if response.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Expected %d method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func TestHeadMethodErrorService(t *testing.T) {
+
+	url := fmt.Sprintf("http://%s/api/planets", ApiEndpoint)
+
+	req, err := http.NewRequest("HEAD", url, nil)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if response.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Expected %d method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func TestErrorDeleteService(t *testing.T) {
+
+	v := rand.Int()
+
+	url := fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, strconv.Itoa(v))
+
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	//body, err := io.ReadAll(response.Body)
+	//total := gjson.Get(string(body), "hits.total.value").Int()
+
+	if response.StatusCode != http.StatusNotFound {
+		t.Errorf("Expected %d not found", http.StatusNotFound)
+	}
+}
+
+func TestErrorGetService(t *testing.T) {
+
+	v := rand.Int()
+
+	url := fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, strconv.Itoa(v))
+
+	response, err := http.Get(url)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	//body, err := io.ReadAll(response.Body)
+	//total := gjson.Get(string(body), "hits.total.value").Int()
+
+	if response.StatusCode != http.StatusNotFound {
+		t.Errorf("Expected %d not found", http.StatusNotFound)
+	}
+}
+
+func TestErrorSearchService(t *testing.T) {
+
+	v := rand.Int()
+
+	url := fmt.Sprintf("http://%s/api/planets?name=%s", ApiEndpoint, strconv.Itoa(v))
+
+	response, err := http.Get(url)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	//body, err := io.ReadAll(response.Body)
+	//total := gjson.Get(string(body), "hits.total.value").Int()
+
+	if response.StatusCode != http.StatusNotFound {
+		t.Errorf("Expected %d not found", http.StatusNotFound)
 	}
 }
