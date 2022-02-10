@@ -69,6 +69,16 @@ Executar  chamadas  via  curl  ou  Postman
 Obs:  Caso  seja  necessário  customizar  alguma  porta  ou  endpoint,  alterar  no  arquivo  properties.go
 
   
+# Como Testar
+
+Para o projeto SWAPI foram criados dois níveis de teste: unitário e de serviço. Ambos estão presentes no arquivo `swapi_test.go`.
+
+Para executar os testes completos, é necessário que o server esteja rodando, portanto, executar `go run . &` antes de executar `go test .`
+
+Segue o resultado dos testes:
+
+`go test .
+ok  	luizjanela/swapi	1.211s`
 
 #  Planeta
 
