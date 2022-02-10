@@ -6,12 +6,14 @@ Utiliza a Star Wars API https://swapi.dev/api/ para complementar informações.
 
 # Como Rodar
 
- 1. Ativar instância do Elastic Search
-	 $ elasticsearch
- 2. Ativar server Go na porta desejada (default 8081)
-	$ go run http-servers.go 8081 &
- 3. Executar chamadas via curl ou Postman
-	$ curl http://localhost:8081/api/planets
+1. Ativar instância do Elastic Search
+	$ elasticsearch
+2. Buildar projeto (a partir da pasta do projeto)
+	$ go build .
+3. Ativar server Go (a partir da pasta do projeto) (default port 8083)
+	$ go run . &
+4. Executar chamadas via curl ou Postman
+	$ curl http://localhost:8083/api/planets
 
 # Serviços
 
@@ -115,7 +117,7 @@ Planeta não encontrado
 
 # Exemplo de Chamadas
 
-	curl http://localhost:8081/planets
+	curl http://localhost:8083/api/planets
 
 # Links de apoio
 
