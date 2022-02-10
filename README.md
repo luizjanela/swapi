@@ -158,23 +158,12 @@ A  entidade  Planeta  possui  5  atributos:
 
   
 
-200  OK  
 
-[{"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5},{"id":"AwS5434BYh62MkvtbQzo","name":"Alderaan","climate":"temperate","terrain":"gas  giant","apparitions":2}]
-
-  
-
-200  OK
-
-[]
-
-Nenhum  planeta  encontrado
-
-  
-
-500  INTERNAL  SERVER  ERROR
-
-{"status":false,  "message":"Error  message"}
+| HTTP Status | Body | Descrição |
+|--|--|--|
+| 200  OK  | [{"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5},{"id":"AwS5434BYh62MkvtbQzo","name":"Alderaan","climate":"temperate","terrain":"gas  giant","apparitions":2}] | Listagem dos Planetas  |
+| 200  OK | [] | Nenhum  planeta  encontrado |
+| 500  INTERNAL  SERVER  ERROR | {"status":false,  "message":"Error  message"} | General error | 
 
   
 
@@ -209,23 +198,12 @@ Nenhum  planeta  encontrado
 
   
 
-200  OK  
 
-[{"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5}]
-
-  
-
-200  OK
-
-[]
-
-Nenhum  planeta  encontrado
-
-  
-
-500  INTERNAL  SERVER  ERROR
-
-{"status":false,  "message":"Error  message"}
+| HTTP Status | Body | Descrição |
+|--|--|--|
+|200  OK  | {"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5} | Planeta encontrado  |
+|404  NOT FOUND | {"status":false,  "message":"Planet not found"} | Nenhum  planeta  encontrado |
+|500  INTERNAL  SERVER  ERROR | {"status":false,  "message":"Error  message"} | General error |
 
   
 
@@ -260,21 +238,12 @@ Nenhum  planeta  encontrado
 #### Responses
 
 
-200  OK  
 
-{"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5}
-
-  
-
-404  NOT  FOUND
-
-{"status":false,"message":"Planet  not  found"}
-
-  
-
-500  INTERNAL  SERVER  ERROR
-
-{"status":false,  "message":"Error  message"}
+| HTTP Status | Body | Descrição |
+|--|--|--|
+| 200  OK  | {"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5} | Planeta encontrado | 
+| 404  NOT  FOUND | {"status":false,"message":"Planet not found"} |  Planeta não encontrado | 
+|500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"}|General error|
 
   
 
@@ -311,19 +280,15 @@ Nenhum  planeta  encontrado
 
   
 
-200  OK  
 
-{"status":true,  "message":"Planet  deleted"}
+| HTTP Status | Body | Descrição |
+|--|--|--|
 
-Planeta  removido  com  sucesso
-
+|200  OK  |{"status":true,  "message":"Planet  deleted"}|Planeta  removido  com  sucesso|
   
+| 404  NOT  FOUND | {"status":false,"message":"Planet not found"} |  Planeta não encontrado | 
 
-404  NOT  FOUND  
-
-{"status":false,  "message":"Planet  not  found"}
-
-Planeta  não  encontrado
+|500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"}|General error|
 
   
 
@@ -342,10 +307,13 @@ Planeta  não  encontrado
 ###  Respostas  gerais  de  Erro
 
   
+| HTTP Status | Descrição |
+|--|--|
 
-405  Method  Not  Allowed  para  outros  métodos  como  HEAD,  PUT  e  OPTIONS.
+|405  METHOD NOT ALLOWED |Método não permitido|
+  
+| 404  NOT  FOUND | Recurso não encontrado | 
 
-404  NOT  FOUND  para  recursos  não  encontrado.
 
   
 
