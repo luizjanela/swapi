@@ -1,11 +1,17 @@
 package main
 
 import (
+	//"encoding/json"
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
+	"net/url"
 	"strconv"
 	"testing"
+	"time"
+
+	"github.com/tidwall/gjson"
 )
 
 func TestErrorCreateUnit(t *testing.T) {
@@ -17,6 +23,7 @@ func TestErrorCreateUnit(t *testing.T) {
 }
 
 func TestErrorDeleteUnit(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
 	_, err := deletePlanetById(strconv.Itoa(rand.Int()))
 	if err.Error() != "Planet not found" {
 		t.Error("Expected to not delete")
@@ -24,6 +31,7 @@ func TestErrorDeleteUnit(t *testing.T) {
 }
 
 func TestErrorSearchUnit(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
 	_, err := searchPlanetByName(strconv.Itoa(rand.Int()))
 	if err.Error() != "No planet found" {
 		t.Error("Expected to not to find")
@@ -31,6 +39,7 @@ func TestErrorSearchUnit(t *testing.T) {
 }
 
 func TestErrorGetByIdUnit(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
 	v := rand.Int()
 	_, err := getPlanetById(strconv.Itoa(v))
 	if err.Error() != fmt.Sprintf("Id %d not found", v) {
@@ -39,6 +48,8 @@ func TestErrorGetByIdUnit(t *testing.T) {
 }
 
 func TestCreateDeleteUnit(t *testing.T) {
+
+	rand.Seed(time.Now().UnixNano())
 	v := rand.Int()
 
 	var planet = PlanetModel{
@@ -186,6 +197,7 @@ func TestHeadMethodErrorService(t *testing.T) {
 
 func TestErrorDeleteService(t *testing.T) {
 
+	rand.Seed(time.Now().UnixNano())
 	v := rand.Int()
 
 	url := fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, strconv.Itoa(v))
@@ -205,9 +217,6 @@ func TestErrorDeleteService(t *testing.T) {
 		t.Error("Expected no error")
 	}
 
-	//body, err := io.ReadAll(response.Body)
-	//total := gjson.Get(string(body), "hits.total.value").Int()
-
 	if response.StatusCode != http.StatusNotFound {
 		t.Errorf("Expected %d not found", http.StatusNotFound)
 	}
@@ -215,6 +224,7 @@ func TestErrorDeleteService(t *testing.T) {
 
 func TestErrorGetService(t *testing.T) {
 
+	rand.Seed(time.Now().UnixNano())
 	v := rand.Int()
 
 	url := fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, strconv.Itoa(v))
@@ -224,9 +234,6 @@ func TestErrorGetService(t *testing.T) {
 		t.Error("Expected no error")
 	}
 
-	//body, err := io.ReadAll(response.Body)
-	//total := gjson.Get(string(body), "hits.total.value").Int()
-
 	if response.StatusCode != http.StatusNotFound {
 		t.Errorf("Expected %d not found", http.StatusNotFound)
 	}
@@ -234,6 +241,7 @@ func TestErrorGetService(t *testing.T) {
 
 func TestErrorSearchService(t *testing.T) {
 
+	rand.Seed(time.Now().UnixNano())
 	v := rand.Int()
 
 	url := fmt.Sprintf("http://%s/api/planets?name=%s", ApiEndpoint, strconv.Itoa(v))
@@ -243,10 +251,137 @@ func TestErrorSearchService(t *testing.T) {
 		t.Error("Expected no error")
 	}
 
-	//body, err := io.ReadAll(response.Body)
-	//total := gjson.Get(string(body), "hits.total.value").Int()
+	if response.StatusCode != http.StatusNotFound {
+		t.Errorf("Expected %d not found", http.StatusNotFound)
+	}
+}
+
+func TestCreateDeleteService(t *testing.T) {
+
+	rand.Seed(time.Now().UnixNano())
+	v := rand.Int()
+
+	// Create
+	var planet = PlanetModel{
+		"",
+		fmt.Sprintf("name_%d", v),
+		fmt.Sprintf("climate_%d", v),
+		fmt.Sprintf("terrain_%d", v),
+		int64(v),
+	}
+
+	endpoint := fmt.Sprintf("http://%s/api/planets", ApiEndpoint)
+
+	params := make(url.Values)
+	params.Set("name", planet.Name)
+	params.Set("climate", planet.Climate)
+	params.Set("terrain", planet.Terrain)
+
+	response, err := http.PostForm(endpoint, params)
+
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	if response.StatusCode != http.StatusCreated {
+		t.Errorf("Expected %d created", http.StatusCreated)
+	}
+
+	body, err := io.ReadAll(response.Body)
+
+	createdPlanet := PlanetModel{
+		gjson.Get(string(body), "id").String(),
+		gjson.Get(string(body), "name").String(),
+		gjson.Get(string(body), "climate").String(),
+		gjson.Get(string(body), "terrain").String(),
+		gjson.Get(string(body), "apparitions").Int(),
+	}
+
+	if createdPlanet.Name != planet.Name ||
+		createdPlanet.Climate != planet.Climate ||
+		createdPlanet.Terrain != planet.Terrain ||
+		createdPlanet.Apparitions != 0 { // Custom planet is not present in any Star wars movie
+		t.Error("Create service expected to be equal")
+	}
+
+	// Get
+	endpoint = fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, createdPlanet.Id)
+
+	response, err = http.Get(endpoint)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	body, err = io.ReadAll(response.Body)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	readPlanet := PlanetModel{
+		gjson.Get(string(body), "id").String(),
+		gjson.Get(string(body), "name").String(),
+		gjson.Get(string(body), "climate").String(),
+		gjson.Get(string(body), "terrain").String(),
+		gjson.Get(string(body), "apparitions").Int(),
+	}
+
+	if readPlanet.Id != createdPlanet.Id ||
+		readPlanet.Name != planet.Name ||
+		readPlanet.Climate != planet.Climate ||
+		readPlanet.Terrain != planet.Terrain ||
+		readPlanet.Apparitions != 0 { // Custom planet is not present in any Star wars movie
+		t.Error("Read service expected to be equal")
+	}
+
+	if response.StatusCode != http.StatusOK {
+		t.Errorf("Expected %d Ok", http.StatusOK)
+	}
+
+	// Delete
+	endpoint = fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, createdPlanet.Id)
+	client := &http.Client{}
+
+	req, err := http.NewRequest("DELETE", endpoint, nil)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	response, err = client.Do(req)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	body, err = io.ReadAll(response.Body)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	status := gjson.Get(string(body), "status").Bool()
+
+	if status != true {
+		t.Error("Expected delete to work")
+	}
+
+	if response.StatusCode != http.StatusOK {
+		t.Errorf("Expected %d Ok", http.StatusOK)
+	}
+
+	// Get
+	endpoint = fmt.Sprintf("http://%s/api/planets/%s", ApiEndpoint, createdPlanet.Id)
+
+	response, err = http.Get(endpoint)
+	if err != nil {
+		t.Error("Expected no error")
+	}
+
+	body, err = io.ReadAll(response.Body)
+	if err != nil {
+		t.Error("Expected no error")
+	}
 
 	if response.StatusCode != http.StatusNotFound {
 		t.Errorf("Expected %d not found", http.StatusNotFound)
 	}
+
+	defer response.Body.Close()
 }

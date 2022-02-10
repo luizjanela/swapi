@@ -30,14 +30,14 @@ func planetCreateHandler(w http.ResponseWriter, r *http.Request) {
 
 	// A planet with the same name already exists
 	// Todo implementar regra de lowercase para casos de diferença apenas de case sensitive
-	if err != nil {
+	if planet.Name != "" {
 		w.WriteHeader(http.StatusConflict)
 		data, _ := json.Marshal(ResponseModel{false, ResponseErrorPlanetAlreadyExists})
 		w.Write(data)
 		return
 	}
 
-	if err.Error() != "No planets found" {
+	if err.Error() != ResponseErrorNoPlanetFound {
 		w.WriteHeader(http.StatusInternalServerError)
 		data, _ := json.Marshal(ResponseModel{false, err.Error()})
 		w.Write(data)
