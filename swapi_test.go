@@ -104,7 +104,7 @@ func TestGeneralErrorService(t *testing.T) {
 
 	response, err := http.Get(url)
 	if err != nil {
-		t.Error("Expected no error")
+		t.Error("Expected no error. Check if server is up")
 	}
 
 	if response.StatusCode != http.StatusNotFound {
@@ -118,7 +118,7 @@ func TestOptionsMethodErrorService(t *testing.T) {
 
 	req, err := http.NewRequest("OPTIONS", url, nil)
 	if err != nil {
-		t.Error("Expected no error")
+		t.Error("Expected no error. Check if server is up")
 	}
 
 	client := &http.Client{}
@@ -142,7 +142,7 @@ func TestPutMethodErrorService(t *testing.T) {
 
 	req, err := http.NewRequest("PUT", url, nil)
 	if err != nil {
-		t.Error("Expected no error")
+		t.Error("Expected no error. Check if server is up")
 	}
 
 	client := &http.Client{}
@@ -166,7 +166,7 @@ func TestHeadMethodErrorService(t *testing.T) {
 
 	req, err := http.NewRequest("HEAD", url, nil)
 	if err != nil {
-		t.Error("Expected no error")
+		t.Error("Expected no error. Check if server is up")
 	}
 
 	client := &http.Client{}

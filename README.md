@@ -77,8 +77,10 @@ Para executar os testes completos, é necessário que o server esteja rodando, p
 
 Segue o resultado dos testes:
 
-`go test .
-ok  	luizjanela/swapi	1.211s`
+`ok  	luizjanela/swapi	1.211s`
+
+Obs.: Para garantir que os testes sempre estão rodando sem cache executar:
+`go clean -testcache`
 
 #  Planeta
 
