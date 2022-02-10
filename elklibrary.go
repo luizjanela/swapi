@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -23,10 +22,7 @@ func createPlanet(planet PlanetModel) (PlanetModel, error) {
 
 	url := fmt.Sprintf("%s/_doc", ElkHost)
 
-	// Todo exclude id from empty Marshal
-	postBody, err := json.Marshal(planet)
-
-	response, err := http.Post(url, "application/json", strings.NewReader(string(postBody)))
+	response, err := http.Post(url, "application/json", strings.NewReader(planetModelMarshall(planet)))
 	if err != nil {
 		return PlanetModel{}, err
 	}

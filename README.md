@@ -146,13 +146,13 @@ A  entidade  Planeta  possui  5  atributos:
 
 -  [x]  Capturar  total  de  aparições  em  filmes  a  partir  da  busca  https://swapi.dev/api/planets/?search=Alderaan  (caso  o  planeja  não  existir,  salvar  com  0  aparições)
 
+-  [x]  Testes  automatizados  do  serviço
+
+-  [x]  Response  geral  para  cenários  de  erro
+
 -  [  ]  Implementar  regra  para  tornar  o  serviço  case-insensitive
 
 -  [  ]  Criar  Enum  para  climate  e  terrain
-
--  [  ]  Testes  automatizados  do  serviço
-
--  [x]  Response  geral  para  cenários  de  erro
 
   
 
@@ -181,13 +181,13 @@ A  entidade  Planeta  possui  5  atributos:
 
 ####  TODO  (Task  list)
 
-  
 
--  [  ]  Criar  paginação  na  busca
 
--  [  ]  Testes  automatizados  do  serviço
+-  [x]  Testes  automatizados  do  serviço
 
 -  [x]  Response  geral  para  cenários  de  erro
+
+-  [  ]  Criar  paginação  na  busca
 
   
 
@@ -225,11 +225,11 @@ A  entidade  Planeta  possui  5  atributos:
 
 -  [x]  Validar  buscar  com  mais  de  uma  palavra
 
--  [  ]  Implementar  busca  *full_text*  no  Elastic  Search  para  sugestões  aproximadas  do  nome
-
--  [  ]  Testes  automatizados  do  serviço
+-  [x]  Testes  automatizados  do  serviço
 
 -  [x]  Response  geral  para  cenários  de  erro
+
+-  [  ]  Implementar  busca  *full_text*  no  Elastic  Search  para  sugestões  aproximadas  do  nome
 
   
 
@@ -267,7 +267,7 @@ A  entidade  Planeta  possui  5  atributos:
 
 -  [x]  Validar  Id
 
--  [  ]  Testes  automatizados  do  serviço
+-  [x]  Testes  automatizados  do  serviço
 
 -  [x]  Response  geral  para  cenários  de  erro
 
@@ -305,9 +305,9 @@ A  entidade  Planeta  possui  5  atributos:
 
   
 
--  [x]  Validar  Id
+- [x]  Validar  Id
 
--  [  ]  Testes  automatizados  do  serviço
+-  [x]  Testes  automatizados  do  serviço
 
 -  [x]  Response  geral  para  cenários  de  erro
 
@@ -338,7 +338,7 @@ Criação de Planeta
 
   
 
--  https://httpstatuses.com/
+- https://httpstatuses.com/
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
--  https://swapi.dev/documentation
+- https://swapi.dev/documentation
 - https://pkg.go.dev/
