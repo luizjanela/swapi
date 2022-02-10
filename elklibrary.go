@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -9,23 +10,21 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func createPlanet(name string, climate string, terrain string) (PlanetModel, error) {
+func createPlanet(planet PlanetModel) (PlanetModel, error) {
 
 	/*
 		Direct ELK Request
 		curl -X POST http://127.0.0.1:9200/index-swapi-0001/_doc --data '{"name": "Terra nova", "climate": "temperate", "terrain": "grasslands, mountains"}' -H 'Content-Type: application/json'
 	*/
 
-	var planet PlanetModel
-
-	// Todo use PlanetModel instead
-	postBody := fmt.Sprintf(`{"name": "%s", "climate": "%s", "terrain": "%s"}`, name, climate, terrain)
-
 	url := fmt.Sprintf("%s/_doc", ElkHost)
 
-	response, err := http.Post(url, "application/json", strings.NewReader(postBody))
+	// Todo exclude id from empty Marshal
+	postBody, err := json.Marshal(planet)
+
+	response, err := http.Post(url, "application/json", strings.NewReader(string(postBody)))
 	if err != nil {
-		return planet, err
+		return PlanetModel{}, err
 	}
 
 	body, err := io.ReadAll(response.Body)
@@ -33,16 +32,10 @@ func createPlanet(name string, climate string, terrain string) (PlanetModel, err
 	result := gjson.Get(string(body), "result").String()
 
 	if result != "created" {
-		return planet, fmt.Errorf("Error creating planet")
+		return PlanetModel{}, fmt.Errorf("Error creating planet")
 	}
 
-	planet = PlanetModel{
-		gjson.Get(string(body), "_id").String(),
-		name,
-		climate,
-		terrain,
-		"0", // Substite with swapi apparitions data
-	}
+	planet.Id = gjson.Get(string(body), "_id").String()
 
 	defer response.Body.Close()
 
@@ -81,7 +74,7 @@ func getPlanetById(id string) (PlanetModel, error) {
 		gjson.Get(string(body), "_source.name").String(),
 		gjson.Get(string(body), "_source.climate").String(),
 		gjson.Get(string(body), "_source.terrain").String(),
-		gjson.Get(string(body), "_source.film_apparitions").String(),
+		gjson.Get(string(body), "_source.apparitions").Int(),
 	}
 
 	defer response.Body.Close()
@@ -89,6 +82,7 @@ func getPlanetById(id string) (PlanetModel, error) {
 	return planet, nil
 }
 
+// Todo implement limit offset logic
 func listPlanets() ([]PlanetModel, error) {
 
 	/*
@@ -98,9 +92,12 @@ func listPlanets() ([]PlanetModel, error) {
 
 	var planets []PlanetModel
 
+	// Todo implement limit offset logic
+	postBody := `{"size":100}`
+
 	url := fmt.Sprintf("%s/_search", ElkHost)
 
-	response, err := http.Get(url)
+	response, err := http.Post(url, "application/json", strings.NewReader(postBody))
 	if err != nil {
 		return planets, err
 	}
@@ -110,7 +107,7 @@ func listPlanets() ([]PlanetModel, error) {
 	total := gjson.Get(string(body), "hits.total.value").Int()
 
 	if total == 0 {
-		return planets, fmt.Errorf("No planets found")
+		return planets, nil
 	}
 
 	var planet PlanetModel
@@ -123,7 +120,7 @@ func listPlanets() ([]PlanetModel, error) {
 			gjson.Get(value.String(), "_source.name").String(),
 			gjson.Get(value.String(), "_source.climate").String(),
 			gjson.Get(value.String(), "_source.terrain").String(),
-			gjson.Get(value.String(), "_source.film_apparitions").String(),
+			gjson.Get(value.String(), "_source.apparitions").Int(),
 		}
 
 		planets = append(planets, planet)
@@ -172,7 +169,7 @@ func searchPlanets(name string) ([]PlanetModel, error) {
 			gjson.Get(value.String(), "_source.name").String(),
 			gjson.Get(value.String(), "_source.climate").String(),
 			gjson.Get(value.String(), "_source.terrain").String(),
-			gjson.Get(value.String(), "_source.film_apparitions").String(),
+			gjson.Get(value.String(), "_source.apparitions").Int(),
 		}
 
 		planets = append(planets, planet)

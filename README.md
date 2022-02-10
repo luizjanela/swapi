@@ -37,6 +37,13 @@ Filme salvo com sucesso
 {"status":false, "message":"Planet already exists"}
 Planeta não pode ser salvo, pois já existe
 
+412 PRECONDITION FAILED 
+{"status":false, "message":"All params must be set"}
+Planeta não pode ser salvo, pois faltam parâmetros
+
+500 INTERNAL SERVER ERROR
+{"status":false, "message":"Error message"}
+
 #### TODO (Task list)
 
 - [ ] Validar atributos
