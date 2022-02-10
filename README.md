@@ -46,10 +46,12 @@ Planeta não pode ser salvo, pois faltam parâmetros
 
 #### TODO (Task list)
 
-- [ ] Validar atributos
-- [ ] Validar se o planeta já existe
-- [ ] Capturar total de aparições em filmes a partir da busca https://swapi.dev/api/planets/?search=Alderaan (caso o planeja não existir, salvar com 0 aparições)
+- [x] Validar atributos
+- [x] Validar se o planeta já existe
+- [x] Capturar total de aparições em filmes a partir da busca https://swapi.dev/api/planets/?search=Alderaan (caso o planeja não existir, salvar com 0 aparições)
 - [ ] Criar Enum para climate e terrain
+- [ ] Testes automatizados do serviço
+- [x] Response geral para cenários de erro
 
 
 ### Listar Planetas
@@ -68,6 +70,8 @@ Nenhum planeta encontrado
 #### TODO (Task list)
 
 - [ ] Criar paginação na busca
+- [ ] Testes automatizados do serviço
+- [x] Response geral para cenários de erro
 
 ### Buscar Planeta por nome
 
@@ -84,8 +88,10 @@ Nenhum planeta encontrado
 
 #### TODO (Task list)
 
-- [ ] Validar buscar com mais de uma palavra
+- [x] Validar buscar com mais de uma palavra
 - [ ] Implementar busca *full_text* no Elastic Search para sugestões aproximadas do nome
+- [ ] Testes automatizados do serviço
+- [x] Response geral para cenários de erro
 
 ### Buscar Planeta por Id
 
@@ -97,7 +103,9 @@ Nenhum planeta encontrado
 
 #### TODO (Task list)
 
-- [ ] Validar Id
+- [x] Validar Id
+- [ ] Testes automatizados do serviço
+- [x] Response geral para cenários de erro
 
 ### Remover Planeta por Id
 
@@ -115,7 +123,9 @@ Planeta não encontrado
 
 #### TODO (Task list)
 
-- [ ] Validar Id
+- [x] Validar Id
+- [ ] Testes automatizados do serviço
+- [x] Response geral para cenários de erro
 
 ### Respostas gerais de Erro
 
