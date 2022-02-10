@@ -28,6 +28,8 @@ func planetCreateHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if planet name already exists using ELK Library
 	planets, err := searchPlanets(name)
 
+	// A planet with the same name already exists
+	// Todo implementar regra de lowercase para casos de diferença apenas de case sensitive
 	if len(planets) > 0 {
 		w.WriteHeader(http.StatusConflict)
 		data, _ := json.Marshal(ResponseModel{false, ResponseErrorPlanetAlreadyExists})
@@ -43,6 +45,7 @@ func planetCreateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// ELK Library
+	// Planet created with empty id
 	planet, err := createPlanet(PlanetModel{"", name, climate, terrain, apparitions})
 
 	if err != nil {
