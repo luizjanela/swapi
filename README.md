@@ -118,7 +118,7 @@ A  entidade  Planeta  possui  5  atributos:
 | HTTP Status | Body | Descrição |
 |--|--|--|
 | 201  OK | {"id":"_QRZ434BYh62MkvtPQvg",  "name":"Tatooine",  "climate":  "arid",  "terrain":  "desert",  "apparitions":5} | Filme  salvo  com  sucesso|
-|409  CONFLICT |   {"status":false,  "message":"Planet  already  exists"} | Planeta  não  pode  ser  salvo,  pois  já  existe |
+| 409  CONFLICT |   {"status":false,  "message":"Planet  already  exists"} | Planeta  não  pode  ser  salvo,  pois  já  existe |
 | 412  PRECONDITION  FAILED | {"status":false,  "message":"All  params  must  be  set"} | Planeta  não  pode  ser  salvo,  pois  faltam  parâmetros |
 | 500  INTERNAL  SERVER  ERROR | {"status":false,  "message":"Error  message"} | General error |
 
@@ -201,9 +201,9 @@ A  entidade  Planeta  possui  5  atributos:
 
 | HTTP Status | Body | Descrição |
 |--|--|--|
-|200  OK  | {"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5} | Planeta encontrado  |
-|404  NOT FOUND | {"status":false,  "message":"Planet not found"} | Nenhum  planeta  encontrado |
-|500  INTERNAL  SERVER  ERROR | {"status":false,  "message":"Error  message"} | General error |
+| 200  OK  | {"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5} | Planeta encontrado  |
+| 404  NOT FOUND | {"status":false,  "message":"Planet not found"} | Nenhum  planeta  encontrado |
+| 500  INTERNAL  SERVER  ERROR | {"status":false,  "message":"Error  message"} | General error |
 
   
 
@@ -243,7 +243,7 @@ A  entidade  Planeta  possui  5  atributos:
 |--|--|--|
 | 200  OK  | {"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas  giant","apparitions":5} | Planeta encontrado | 
 | 404  NOT  FOUND | {"status":false,"message":"Planet not found"} |  Planeta não encontrado | 
-|500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"}|General error|
+| 500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"}|General error|
 
   
 
@@ -283,12 +283,9 @@ A  entidade  Planeta  possui  5  atributos:
 
 | HTTP Status | Body | Descrição |
 |--|--|--|
-
-|200  OK  |{"status":true,  "message":"Planet  deleted"}|Planeta  removido  com  sucesso|
-  
+|200  OK  |{"status":true,  "message":"Planet  deleted"} | Planeta  removido  com  sucesso | 
 | 404  NOT  FOUND | {"status":false,"message":"Planet not found"} |  Planeta não encontrado | 
-
-|500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"}|General error|
+| 500  INTERNAL  SERVER  ERROR|{"status":false,  "message":"Error  message"} | General error|
 
   
 
@@ -309,9 +306,8 @@ A  entidade  Planeta  possui  5  atributos:
   
 | HTTP Status | Descrição |
 |--|--|
+| 405  METHOD NOT ALLOWED | Método não permitido |
 
-|405  METHOD NOT ALLOWED |Método não permitido|
-  
 | 404  NOT  FOUND | Recurso não encontrado | 
 
 
