@@ -12,6 +12,10 @@ import (
 
 func createPlanet(planet PlanetModel) (PlanetModel, error) {
 
+	if planet.Name == "" || planet.Climate == "" || planet.Terrain == "" {
+		return PlanetModel{}, fmt.Errorf("Cannot create empty planet")
+	}
+
 	/*
 		Direct ELK Request
 		curl -X POST http://127.0.0.1:9200/index-swapi-0001/_doc --data '{"name": "Terra nova", "climate": "temperate", "terrain": "grasslands, mountains"}' -H 'Content-Type: application/json'
@@ -133,14 +137,14 @@ func listPlanets() ([]PlanetModel, error) {
 	return planets, nil
 }
 
-func searchPlanets(name string) ([]PlanetModel, error) {
+func searchPlanetByName(name string) (PlanetModel, error) {
 
 	/*
 		Direct ELK Request
 		curl http://127.0.0.1:9200/index-swapi-0001/_search?pretty --data '{"query":{"match":{"name": "Alderaan"}}}' -H 'Content-Type: application/json'
 	*/
 
-	var planets []PlanetModel
+	var planet PlanetModel
 
 	postBody := fmt.Sprintf(`{"query":{"match":{"name": "%s"}}}`, name)
 
@@ -148,7 +152,7 @@ func searchPlanets(name string) ([]PlanetModel, error) {
 
 	response, err := http.Post(url, "application/json", strings.NewReader(postBody))
 	if err != nil {
-		return planets, err
+		return planet, err
 	}
 
 	body, err := io.ReadAll(response.Body)
@@ -156,37 +160,27 @@ func searchPlanets(name string) ([]PlanetModel, error) {
 	total := gjson.Get(string(body), "hits.total.value").Int()
 
 	if total == 0 {
-		return planets, fmt.Errorf("No planets found")
+		return planet, fmt.Errorf("No planet found")
 	}
 
-	var planet PlanetModel
-
-	result := gjson.Get(string(body), "hits.hits")
-	result.ForEach(func(key, value gjson.Result) bool {
-
-		planet = PlanetModel{
-			gjson.Get(value.String(), "_id").String(),
-			gjson.Get(value.String(), "_source.name").String(),
-			gjson.Get(value.String(), "_source.climate").String(),
-			gjson.Get(value.String(), "_source.terrain").String(),
-			gjson.Get(value.String(), "_source.apparitions").Int(),
-		}
-
-		planets = append(planets, planet)
-
-		return true
-	})
+	planet = PlanetModel{
+		gjson.Get(string(body), "hits.hits.0._id").String(),
+		gjson.Get(string(body), "hits.hits.0._source.name").String(),
+		gjson.Get(string(body), "hits.hits.0._source.climate").String(),
+		gjson.Get(string(body), "hits.hits.0._source.terrain").String(),
+		gjson.Get(string(body), "hits.hits.0._source.apparitions").Int(),
+	}
 
 	defer response.Body.Close()
 
-	return planets, nil
+	return planet, nil
 }
 
 func deletePlanetById(id string) (bool, error) {
 
 	/*
 		Direct ELK Request
-		curl http://127.0.0.1:9200/index-swapi-0001/_doc/8gS22n4BYh62MkvteAsR1
+		curl -X DELETE http://127.0.0.1:9200/index-swapi-0001/_doc/8gS22n4BYh62MkvteAsR1
 	*/
 
 	url := fmt.Sprintf("%s/_doc/%s", ElkHost, id)
@@ -209,6 +203,10 @@ func deletePlanetById(id string) (bool, error) {
 	}
 
 	result := gjson.Get(string(body), "result").String()
+
+	if result == "not_found" {
+		return false, fmt.Errorf("Planet not found")
+	}
 
 	if result != "deleted" {
 		return false, fmt.Errorf("Id %s could not be deleted", id)

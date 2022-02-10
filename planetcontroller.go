@@ -26,11 +26,11 @@ func planetCreateHandler(w http.ResponseWriter, r *http.Request) {
 	apparitions, err := getApparitionsByName(name)
 
 	// Check if planet name already exists using ELK Library
-	planets, err := searchPlanets(name)
+	planet, err := searchPlanetByName(name)
 
 	// A planet with the same name already exists
 	// Todo implementar regra de lowercase para casos de diferença apenas de case sensitive
-	if len(planets) > 0 {
+	if err != nil {
 		w.WriteHeader(http.StatusConflict)
 		data, _ := json.Marshal(ResponseModel{false, ResponseErrorPlanetAlreadyExists})
 		w.Write(data)
@@ -46,7 +46,7 @@ func planetCreateHandler(w http.ResponseWriter, r *http.Request) {
 
 	// ELK Library
 	// Planet created with empty id
-	planet, err := createPlanet(PlanetModel{"", name, climate, terrain, apparitions})
+	planet, err = createPlanet(PlanetModel{"", name, climate, terrain, apparitions})
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -74,16 +74,16 @@ func planetSearchHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	// ELK Library
-	planets, err := searchPlanets(vars["name"])
+	planet, err := searchPlanetByName(vars["name"])
 
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
-		data, _ := json.Marshal(ResponseModel{false, ResponseErrorNoPlanetsFound})
+		data, _ := json.Marshal(ResponseModel{false, ResponseErrorPlanetNotFound})
 		w.Write(data)
 		return
 	}
 
-	data, err := json.Marshal(planets)
+	data, err := json.Marshal(planet)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		data, _ := json.Marshal(ResponseModel{false, err.Error()})
@@ -104,7 +104,7 @@ func planetListHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(planets) == 0 {
 		w.WriteHeader(http.StatusOK)
-		data, _ := json.Marshal(planets)
+		data, _ := json.Marshal([]string{})
 		w.Write(data)
 		return
 	}

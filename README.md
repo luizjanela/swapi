@@ -43,7 +43,7 @@ O  arquivo  `server.go`  é  onde  está  presente  o  método  main,  sendo  el
 
 Após  o  projeto  iniciar,  podem  ser  feitas  chamadas  HTTP  para  que  acesso  aos  recursos.
 
-O projeto se utiliza do package `github.com/gorilla/mux` para facilitação da criação de rotas e handlers.
+O projeto se utiliza dos packages `github.com/gorilla/mux` para facilitação da criação de rotas e handlers e `github.com/tidwall/gjson` para manipulações de json.
   
 
 #  Como  Rodar
@@ -307,7 +307,6 @@ A  entidade  Planeta  possui  5  atributos:
 | HTTP Status | Descrição |
 |--|--|
 | 405  METHOD NOT ALLOWED | Método não permitido |
-
 | 404  NOT  FOUND | Recurso não encontrado | 
 
 
