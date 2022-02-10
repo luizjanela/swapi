@@ -5,10 +5,9 @@
 
 Desenvolvido  em  Golang  (go  version  go1.17.6  darwin/amd64)  e  Elastic  Search  (version  7.17.0).
 
-  
-
 Utiliza  a  Star  Wars  API  https://swapi.dev/api/  para  complementar  informações.
 
+Foi utilizada a LiteIDE X37.4 para desenvolvimento.
   
 
 #  Arquitetura
