@@ -1,0 +1,161 @@
+Luizs-MacBook-Pro:americanas luizjanela$ curl -X POST  http://localhost:8083/api/planets --data "name=Coruscant&climate=temperate&terrain=cityscape, mountains" -v
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> POST /api/planets HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> Content-Length: 61
+> Content-Type: application/x-www-form-urlencoded
+> 
+* upload completely sent off: 61 out of 61 bytes
+< HTTP/1.1 201 Created
+< Content-Type: application/json; charset=utf-8
+< Date: Thu, 10 Feb 2022 19:20:22 GMT
+< Content-Length: 119
+< 
+* Connection #0 to host localhost left intact
+{"id":"UFsU5X4BzZU0LPBbV_C9","name":"Coruscant","climate":"temperate","terrain":"cityscape, mountains","apparitions":4}Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl http://localhost:8083/api/planets?name=Coruscant -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> GET /api/planets?name=Coruscant HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Date: Thu, 10 Feb 2022 19:20:40 GMT
+< Content-Length: 119
+< 
+* Connection #0 to host localhost left intact
+{"id":"UFsU5X4BzZU0LPBbV_C9","name":"Coruscant","climate":"temperate","terrain":"cityscape, mountains","apparitions":4}Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl http://localhost:8083/api/planets/UFsU5X4BzZU0LPBbV_C9 -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> GET /api/planets/UFsU5X4BzZU0LPBbV_C9 HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Date: Thu, 10 Feb 2022 19:20:48 GMT
+< Content-Length: 119
+< 
+* Connection #0 to host localhost left intact
+{"id":"UFsU5X4BzZU0LPBbV_C9","name":"Coruscant","climate":"temperate","terrain":"cityscape, mountains","apparitions":4}Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl http://localhost:8083/api/planets -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> GET /api/planets HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Date: Thu, 10 Feb 2022 19:21:04 GMT
+< Transfer-Encoding: chunked
+< 
+* Connection #0 to host localhost left intact
+[{"id":"AQS4434BYh62MkvtqAyQ","name":"Tatootine","climate":"temperate","terrain":"gas giant","apparitions":0},{"id":"AgS4434BYh62MkvtxgxQ","name":"Tatooine","climate":"temperate","terrain":"gas giant","apparitions":5},{"id":"AwS5434BYh62MkvtbQzo","name":"Alderaan","climate":"temperate","terrain":"gas giant","apparitions":2},{"id":"_gRx434BYh62MkvtLAvJ","name":"Dagoblade","climate":"quente","terrain":"montains","apparitions":0},{"id":"9QTp4H4BYh62MkvtFAt2","name":"Planeta água","climate":"quente","terrain":"montains","apparitions":0},{"id":"8wTj4H4BYh62MkvtFgv9","name":"Terra nova","climate":"temperate","terrain":"grasslands, mountains","apparitions":0},{"id":"8QS22n4BYh62MkvtDguH","name":"Tattoine","climate":"arid","terrain":"desert","apparitions":0},{"id":"9wRR434BYh62Mkvt4wul","name":"Marte","climate":"quente","terrain":"montains","apparitions":0},{"id":"-ARS434BYh62MkvtdQuy","name":"Hoth","climate":"quente","terrain":"montains","apparitions":0},{"id":"-gRU434BYh62MkvtDwvp","name":"Dagobah","climate":"quente","terrain":"montains","apparitions":0},{"id":"-wRW434BYh62MkvtywuB","name":"Dagobah","climate":"quente","terrain":"montains","apparitions":0},{"id":"_ARX434BYh62MkvtIwti","name":"Dagobah","climate":"quente","terrain":"montains","apparitions":0},{"id":"DwRQ5H4BYh62MkvtFgy_","name":"name_4037200794235010051","climate":"climate_4037200794235010051","terrain":"terrain_4037200794235010051","apparitions":4037200794235010051},{"id":"EARQ5H4BYh62Mkvt3gxR","name":"name_4037200794235010051","climate":"climate_4037200794235010051","terrain":"terrain_4037200794235010051","apparitions":4037200794235010051},{"id":"EgRS5H4BYh62MkvtOwzk","name":"name_4037200794235010051","climate":"climate_4037200794235010051","terrain":"terrain_4037200794235010051","apparitions":4037200794235010051},{"id":"EQRS5H4BYh62MkvtJgzB","name":"name_4037200794235010051","climate":"climate_4037200794235010051","terrain":"terrain_4037200794235010051","apparitions":4037200794235010051},{"id":"SlsE5X4BzZU0LPBbo_DN","name":"name_7289761562784821798","climate":"climate_7289761562784821798","terrain":"terrain_7289761562784821798","apparitions":0},{"id":"T1sS5X4BzZU0LPBbjvAo","name":"Naboo","climate":"temperate","terrain":"grassy hills, swamps, forests, mountains","apparitions":4},{"id":"UFsU5X4BzZU0LPBbV_C9","name":"Coruscant","climate":"temperate","terrain":"cityscape, mountains","apparitions":4}]Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl -X DELETE http://localhost:8083/api/planets/UFsU5X4BzZU0LPBbV_C9 -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> DELETE /api/planets/UFsU5X4BzZU0LPBbV_C9 HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=utf-8
+< Date: Thu, 10 Feb 2022 19:21:21 GMT
+< Content-Length: 42
+< 
+* Connection #0 to host localhost left intact
+{"status":true,"message":"Planet deleted"}Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl -X DELETE http://localhost:8083/api/planets/UFsU5X4BzZU0LPBbV_C9 -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> DELETE /api/planets/UFsU5X4BzZU0LPBbV_C9 HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 404 Not Found
+< Date: Thu, 10 Feb 2022 19:21:26 GMT
+< Content-Length: 45
+< Content-Type: text/plain; charset=utf-8
+< 
+* Connection #0 to host localhost left intact
+{"status":false,"message":"Planet not found"}Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ 
+Luizs-MacBook-Pro:americanas luizjanela$ curl http://localhost:8083/api/planets/UFsU5X4BzZU0LPBbV_C9 -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 8083 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8083 (#0)
+> GET /api/planets/UFsU5X4BzZU0LPBbV_C9 HTTP/1.1
+> Host: localhost:8083
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 404 Not Found
+< Date: Thu, 10 Feb 2022 19:21:29 GMT
+< Content-Length: 45
+< Content-Type: text/plain; charset=utf-8
+< 
+* Connection #0 to host localhost left intact
+{"status":false,"message":"Planet not found"}

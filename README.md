@@ -90,7 +90,7 @@ A  entidade  Planeta  possui  5  atributos:
 
  
 
--  `id  string`  (gerado  automaticamente)
+-  `id  string`  (gerado  automaticamente pelo ELK)
 
 -  `name  string`  (inputado  no  serviço  de  criação)
 
@@ -332,6 +332,8 @@ Listagem de Planetas
 
 Criação de Planeta
 `curl -X POST http://localhost:8083/api/planets --data "name=Alderaan&climate=temperate&terrain=gas giant" -v`
+
+Foi salvo um log da execução de chamadas manuais para o planeta Coruscant que tem 4 aparições em filmes. O resultado dos logs está no arquivo `logs.txt`.
   
 
 #  Links  de  apoio
